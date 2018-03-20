@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # sparkjava-war-example
 Build war with maven and sparkjava framework
 
@@ -10,3 +11,7 @@ Steps:
 5. Start Tomcat by running `bin\startup.bat` (or `bin\startaup.sh` for Linux)
 5. Tomcat will automatically deploy the war
 6. Open [http://localhost:8080/sparkjava-hello-world-1.0/hello](http://localhost:8080/sparkjava-hello-world-1.0/hello) in your browser
+=======
+# fingerprint-registration-identification
+This is the fingerprint authentication for android and  other distributed services. Might be this will help you.
+>>>>>>> 6f2d59516bdd0ec5c83f174447fe41d40114d4ad
