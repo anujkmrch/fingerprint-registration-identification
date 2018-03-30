@@ -35,22 +35,28 @@ public class HelloWorld implements SparkApplication {
 	static Logger log = Logger.getLogger(HelloWorld.class);
 
 	public static void main(String[] args) {
-//		staticFiles.location("/public");
-		externalStaticFileLocation("/var/public");
 		new HelloWorld().init();
 	}
 
 	@Override
 	public void init() {
+
 		boolean debug = true;
-		String basePath = "/var/lib/tomcat7/uploader/rjs/";
-		String uploadPathSave = basePath+"fingerprint/";
-		String tempUploadSave = basePath+"fingerprint_tmp/"; //"/home/anuj/Desktop/pypack/tmp";
-		String dataFile = basePath+"file.json";
-		String matchUrl = "/rjs/fingerprint.upload.match";
-		String setUrl = "/rjs/fingerprint.upload.set";
-		boolean deleteTempFile = false;
+		String baseUrl = "projectname";
+		String basePath = "C:/tomcat7/uploader/rjs/"; 
 		
+		//"/home/anuj/Desktop/pypack/tmp/"
+		
+		String uploadPathSave = basePath+"fingerprint/";
+		String tempUploadSave = basePath+"fingerprint_tmp/";
+		
+		String dataFile = basePath+"file.json";
+		
+		String matchUrl = baseUrl+"/fingerprint.upload.match";
+		String setUrl = baseUrl+"/fingerprint.upload.set";
+		
+		boolean deleteTempFile = false;
+
 		get("/",(req,res)->{
 			return "<!DOCTYPE html>\n" + 
 					"<html lang=\"en\">\n" + 
@@ -95,17 +101,25 @@ public class HelloWorld implements SparkApplication {
             double threshold = 50;
             double high = 0;
             try {
+            	
+//            	if(debug)
+//            		return filePart.getContentType().toString();
             		
-            if(filePart.getContentType().equalsIgnoreCase("image/jpeg") || filePart.getContentType().equalsIgnoreCase("image/png")) {
+            if(filePart.getContentType().equalsIgnoreCase("image/bmp") || filePart.getContentType().equalsIgnoreCase("image/jpeg") || filePart.getContentType().equalsIgnoreCase("image/png")) {
             	String ext = null;
             	
             	if(filePart.getContentType().equalsIgnoreCase("image/png")) {
             		ext = "png";
             	}
+            	
+            	if(filePart.getContentType().equalsIgnoreCase("image/bmp")) {
+            		ext = "bmp";
+            	}
 
             	if(filePart.getContentType().equalsIgnoreCase("image/jpeg")) {
             		ext = "jpg";
             	}
+            	
 	            try (InputStream inputStream = filePart.getInputStream()) {
 	            	
 	            	String filename = tempUploadSave + filePart.getName()+"."+ext;
@@ -180,19 +194,20 @@ public class HelloWorld implements SparkApplication {
             Part filePart = req.raw().getPart("myfile");
             try {
             //check if the image file is png or jpg, if yes then proceed else through error
-            if(filePart.getContentType().equalsIgnoreCase("image/jpeg") || filePart.getContentType().equalsIgnoreCase("image/png")) {
-            	String ext = null;
-            	//set extension type,png if png
-            	if(filePart.getContentType().equalsIgnoreCase("image/png"))
-            	{
-            		ext = "png";
-            	}
-            	
-            	//set extension type,jpg if jpg
-            	if(filePart.getContentType().equalsIgnoreCase("image/jpeg"))
-            	{
-            		ext = "jpg";
-            	}
+            	if(filePart.getContentType().equalsIgnoreCase("image/bmp") || filePart.getContentType().equalsIgnoreCase("image/jpeg") || filePart.getContentType().equalsIgnoreCase("image/png")) {
+                	String ext = null;
+                	
+                	if(filePart.getContentType().equalsIgnoreCase("image/png")) {
+                		ext = "png";
+                	}
+                	
+                	if(filePart.getContentType().equalsIgnoreCase("image/bmp")) {
+                		ext = "bmp";
+                	}
+
+                	if(filePart.getContentType().equalsIgnoreCase("image/jpeg")) {
+                		ext = "jpg";
+                	}
 
             	String collegeid = req.queryParams("collegeid");
 
